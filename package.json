@@ -1,0 +1,35 @@
+{
+  "name": "plane-specs-calculator",
+  "author": {
+    "name": "Edward Shturman",
+    "url": "https://edwardshturman.com"
+  },
+  "homepage": "https://plane-specs-calculator.vercel.app",
+  "version": "0.1.0",
+  "license": "UNLICENSED",
+  "description": "A calculator for BUS 374 plane design specs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edwardshturman/plane-specs-calculator.git"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "rm -rf ./next && next dev",
+    "build": "rm -rf ./next && next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.1.4",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.4",
+    "typescript": "^5"
+  }
+}
