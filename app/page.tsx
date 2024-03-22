@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <>
-      <h1>Plane Spec Calculator</h1>
+      <h1>Plane Specs Calculator</h1>
     </>
   )
 }
