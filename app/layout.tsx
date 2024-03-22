@@ -3,12 +3,12 @@ import localFont from 'next/font/local'
 import './globals.css'
 
 const geist = localFont({
-  src: '@/fonts/GeistVariableVF.woff2',
+  src: 'fonts/GeistVariableVF.woff2',
   variable: '--font-geist'
 })
 
 const geistMono = localFont({
-  src: '@/fonts/GeistMonoVariableVF.woff2',
+  src: 'fonts/GeistMonoVariableVF.woff2',
   variable: '--font-geist-mono'
 })
 
