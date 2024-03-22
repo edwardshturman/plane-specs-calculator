@@ -18,7 +18,7 @@ else metadataBase = new URL(`http://localhost:${process.env.PORT || 3000}`)
 
 export const metadata: Metadata = {
   metadataBase,
-  title: 'Plane Spec Calculator',
+  title: 'Plane Specs Calculator',
   description:
     'A calculator for BUS 374 plane design specs',
   openGraph: {
