@@ -63,3 +63,57 @@ export function calculateWCL(plane: Plane) {
 export function calculateWeight(plane: Plane) {
   return plane.mass * 9.81
 }
+
+export function testWingArea(area: number) {
+  if (area < 750 || area > 3500)
+  return false
+return true
+}
+
+export function testWingSpan(span: number) {
+  if (span < 50)
+  return false
+return true
+}
+
+export function testWingChord(chord: number) {
+  if (chord < 15)
+  return false
+return true
+}
+
+export function testMotorKvRating(motor: Motor) {
+  if (motor.kV < 500 || motor.kV > 2500)
+  return false
+return true
+}
+
+export function testPropellerDiameter(diameter: number) {
+  if (diameter < 4 || diameter > 13)
+  return false
+return true
+}
+
+export function testPropellerPitch(pitch: number) {
+  if (pitch < 3 || pitch > 7.5)
+  return false
+return true
+}
+
+export function testRelationshipBetweenDiameterAndPitch(propeller: Propeller) {
+  if (propeller.diameter < propeller.pitch)
+  return false
+return true
+}
+
+export function testCoefficientOfDrag(cd: number) {
+  if (cd < 0.2 || cd > 0.5)
+  return false
+return true
+}
+
+export function testBatteryCapacity(capacity: number) {
+  if (capacity < 500 || capacity > 5000)
+  return false
+return true
+}
