@@ -87,6 +87,13 @@ export function calculateThrust(
   return Constants.c1 * (Constants.rho * RPM * (propeller.diameter ** 3.5) / Math.sqrt(propeller.pitch)) * (Constants.c2 * RPM * propeller.pitch - velocity)
 }
 
+export function calculateEndurance(
+  batteryCapacity: number,
+  current: number
+) {
+  return batteryCapacity / current
+}
+
 export function testWingArea(area: number) {
   if (area < 750 || area > 3500)
   return false
