@@ -20,7 +20,20 @@ export type Battery = {
 
 export type Motor = {
   kV: number
-  mass: 40
+  mass: {
+    value: 40,
+    units: 'g'
+  }
+}
+
+export type WingArea = {
+  value: number,
+  units: 'cm^2' | 'm^2'
+}
+
+export type Mass = {
+  value: number,
+  units: 'g' | 'kg'
 }
 
 export type Plane = {
@@ -29,7 +42,7 @@ export type Plane = {
   coefficient_of_lift: number
   coefficient_of_drag: number
   aspect_ratio: number
-  mass: number
+  mass: Mass
   propeller: Propeller
   battery: Battery
   motor: Motor
@@ -38,150 +51,264 @@ export type Plane = {
 export function calculateWingArea(
   wing_span: number,
   wing_chord: number
-) {
-  return wing_span * wing_chord
+): WingArea
+{
+  return {
+    value: wing_span * wing_chord,
+    units: 'cm^2'
+  }
 }
 
-export function calculateMassOfPlane(
-  wingArea: number
-) {
-  return 0.25 * wingArea
+export function calculatePlaneMass(
+  wing_area: WingArea
+): Mass
+{
+  let area
+  if (wing_area.units === 'cm^2')
+    area = wing_area.value
+  else
+    area = wing_area.value * 100
+  return {
+    value: 0.25 * area,
+    units: 'g'
+  }
 }
 
 export function calculateCoefficientOfLift(
   coefficient_of_drag: number,
   aspect_ratio: number
-) {
+)
+{
   return coefficient_of_drag + (0.1 * Math.sqrt(aspect_ratio))
 }
 
-export function calculateMassOfBattery(battery: Battery) {
-  return (battery.battery.voltage * battery.capacity) / 130
+export function calculateMassOfBattery(
+  battery: Battery
+): Mass
+{
+  return {
+    value: (battery.battery.voltage * battery.capacity) / 130,
+    units: 'g'
+  }
 }
 
-export function calculateMassOfPropeller(propeller: Propeller) {
-  return propeller.diameter
+export function calculateMassOfPropeller(
+  propeller: Propeller
+): Mass
+{
+  return {
+    value: propeller.diameter,
+    units: 'g'
+  }
 }
 
 export function calculateMassOfComponents(
   battery: Battery,
   motor: Motor,
   propeller: Propeller
-) {
-  return calculateMassOfBattery(battery) + motor.mass + calculateMassOfPropeller(propeller)
+): Mass
+{
+  return {
+    value: calculateMassOfBattery(battery).value + motor.mass.value + calculateMassOfPropeller(propeller).value,
+    units: 'g'
+  }
 }
 
 export function calculateTotalMass(
-  planeMass: number,
-  componentsMass: number
-) {
-  return planeMass + componentsMass
+  planeMass: Mass,
+  componentsMass: Mass
+): Mass
+{
+  return {
+    value: planeMass.value + componentsMass.value,
+    units: 'g'
+  }
 }
 
-export function calculateMotorEfficiencyRating(plane: Plane) {
-  return 1.10 - 3.0E-2 * plane.propeller.diameter - 1.1E-4 * plane.motor.kV - 7.0E-6 * plane.propeller.diameter * plane.motor.kV
+export function calculateMotorEfficiencyRating(
+  propeller: Propeller,
+  motor: Motor
+)
+{
+  return 1.10 - 3.0E-2 * propeller.diameter - 1.1E-4 * motor.kV - 7.0E-6 * propeller.diameter * motor.kV
 }
 
 export function calculateAspectRatio(
   wing_span: number,
   wing_chord: number
-) {
-  return (wing_span ** 2) / calculateWingArea(wing_span, wing_chord)
+)
+{
+  return (wing_span ** 2) / calculateWingArea(wing_span, wing_chord).value
 }
 
 export function calculateWCL(
-  totalMass: number,
-  wingArea: number
-) {
-  return totalMass / (wingArea ** 1.5)
+  total_mass: Mass,
+  wing_area: WingArea
+)
+{
+  let area
+  if (wing_area.units === 'cm^2')
+    area = wing_area.value / 10000
+  else
+    area = wing_area.value
+
+  let mass
+  if (total_mass.units === 'g')
+    mass = total_mass.value / 1000
+  else
+    mass = total_mass.value
+
+  return mass / (area ** 1.5)
 }
 
 export function calculateWeight(
-  totalMass: number
-) {
-  return totalMass * Constants.g
+  total_mass: Mass
+)
+{
+  let mass
+  if (total_mass.units === 'g')
+    mass = total_mass.value / 1000
+  else
+    mass = total_mass.value
+
+  return mass * Constants.g
 }
 
 export function calculateLift(
   velocity: number,
-  wingArea: number,
-  coefficientOfLift: number
-) {
-  return 0.5 * Constants.rho * (velocity ** 2) * wingArea * coefficientOfLift
+  wing_area: WingArea,
+  coefficient_of_lift: number
+)
+{
+  let area
+  if (wing_area.units === 'cm^2')
+    area = wing_area.value / 10000
+  else
+    area = wing_area.value
+  return 0.5 * Constants.rho * (velocity ** 2) * area * coefficient_of_lift
 }
 
 export function calculateThrust(
   RPM: number,
   propeller: Propeller,
   velocity: number
-) {
+)
+{
   return Constants.c1 * (Constants.rho * RPM * (propeller.diameter ** 3.5) / Math.sqrt(propeller.pitch)) * (Constants.c2 * RPM * propeller.pitch - velocity)
 }
 
 export function calculateEndurance(
-  batteryCapacity: number,
+  battery_capacity: number,
   current: number
-) {
-  return batteryCapacity / current
+)
+{
+  return battery_capacity / current
 }
 
 export function calculateCurrent(
   thrust: number,
   velocity: number,
   voltage: number
-) {
+)
+{
   return (thrust * velocity) / voltage
 }
 
-export function testWingArea(area: number) {
+export function calculateMinimumVelocity(
+  wing_area: WingArea,
+  coefficient_of_lift: number,
+  weight: number
+)
+{
+  let area
+  if (wing_area.units === 'cm^2')
+    area = wing_area.value / 10000
+  else
+    area = wing_area.value
+  return Math.sqrt((weight) / (0.5 * Constants.rho * area * coefficient_of_lift))
+}
+
+export function testWingArea(
+  wing_area: WingArea
+)
+{
+  let area
+  if (wing_area.units === 'cm^2')
+    area = wing_area.value
+  else
+    area = wing_area.value * 100
   if (area < 750 || area > 3500)
   return false
 return true
 }
 
-export function testWingSpan(span: number) {
-  if (span < 50)
+export function testWingSpan(
+  wing_span: number
+)
+{
+  if (wing_span < 50)
   return false
 return true
 }
 
-export function testWingChord(chord: number) {
-  if (chord < 15)
+export function testWingChord(
+  wing_chord: number
+)
+{
+  if (wing_chord < 15)
   return false
 return true
 }
 
-export function testMotorKvRating(motor: Motor) {
+export function testMotorKvRating(
+  motor: Motor
+)
+{
   if (motor.kV < 500 || motor.kV > 2500)
   return false
 return true
 }
 
-export function testPropellerDiameter(diameter: number) {
+export function testPropellerDiameter(
+  diameter: number
+)
+{
   if (diameter < 4 || diameter > 13)
   return false
 return true
 }
 
-export function testPropellerPitch(pitch: number) {
+export function testPropellerPitch(
+  pitch: number
+)
+{
   if (pitch < 3 || pitch > 7.5)
   return false
 return true
 }
 
-export function testRelationshipBetweenDiameterAndPitch(propeller: Propeller) {
+export function testRelationshipBetweenDiameterAndPitch(
+  propeller: Propeller
+)
+{
   if (propeller.diameter < propeller.pitch)
   return false
 return true
 }
 
-export function testCoefficientOfDrag(cd: number) {
-  if (cd < 0.2 || cd > 0.5)
+export function testCoefficientOfDrag(
+  coefficient_of_drag: number
+)
+{
+  if (coefficient_of_drag < 0.2 || coefficient_of_drag > 0.5)
   return false
 return true
 }
 
-export function testBatteryCapacity(capacity: number) {
+export function testBatteryCapacity(
+  capacity: number
+)
+{
   if (capacity < 500 || capacity > 5000)
   return false
 return true
