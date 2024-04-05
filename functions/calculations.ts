@@ -94,6 +94,14 @@ export function calculateEndurance(
   return batteryCapacity / current
 }
 
+export function calculateCurrent(
+  thrust: number,
+  velocity: number,
+  voltage: number
+) {
+  return (thrust * velocity) / voltage
+}
+
 export function testWingArea(area: number) {
   if (area < 750 || area > 3500)
   return false
