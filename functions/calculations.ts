@@ -71,6 +71,14 @@ export function calculateWeight(plane: Plane) {
   return plane.mass * Constants.g
 }
 
+export function calculateLift(
+  velocity: number,
+  wingArea: number,
+  coefficientOfLift: number
+) {
+  return 0.5 * Constants.rho * (velocity ** 2) * wingArea * coefficientOfLift
+}
+
 export function testWingArea(area: number) {
   if (area < 750 || area > 3500)
   return false
