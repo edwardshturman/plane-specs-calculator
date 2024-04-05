@@ -79,6 +79,14 @@ export function calculateLift(
   return 0.5 * Constants.rho * (velocity ** 2) * wingArea * coefficientOfLift
 }
 
+export function calculateThrust(
+  RPM: number,
+  propeller: Propeller,
+  velocity: number
+) {
+  return Constants.c1 * (Constants.rho * RPM * (propeller.diameter ** 3.5) / Math.sqrt(propeller.pitch)) * (Constants.c2 * RPM * propeller.pitch - velocity)
+}
+
 export function testWingArea(area: number) {
   if (area < 750 || area > 3500)
   return false
