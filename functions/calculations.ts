@@ -1,3 +1,10 @@
+enum Constants {
+  g = 9.81,
+  rho = 1.22,
+  c1 = 3.59 * (10 ** -8),
+  c2 = 4.23 * (10 ** -4),
+}
+
 export type Propeller = {
   diameter: number
   pitch: number
@@ -61,7 +68,7 @@ export function calculateWCL(plane: Plane) {
 }
 
 export function calculateWeight(plane: Plane) {
-  return plane.mass * 9.81
+  return plane.mass * Constants.g
 }
 
 export function testWingArea(area: number) {
