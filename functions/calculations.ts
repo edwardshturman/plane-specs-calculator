@@ -71,6 +71,13 @@ export function calculateMassOfComponents(
   return calculateMassOfBattery(battery) + motor.mass + calculateMassOfPropeller(propeller)
 }
 
+export function calculateTotalMass(
+  planeMass: number,
+  componentsMass: number
+) {
+  return planeMass + componentsMass
+}
+
 export function calculateMotorEfficiencyRating(plane: Plane) {
   return 1.10 - 3.0E-2 * plane.propeller.diameter - 1.1E-4 * plane.motor.kV - 7.0E-6 * plane.propeller.diameter * plane.motor.kV
 }
