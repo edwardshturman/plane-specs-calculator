@@ -14,6 +14,7 @@ import {
   calculateMassOfPropeller,
   calculateMinimumVelocity,
   calculateMaximumVelocity,
+  calculatePayloadCapacity,
   calculateMassOfComponents,
   calculateCoefficientOfLift,
   calculateMotorEfficiencyRating
@@ -103,6 +104,8 @@ export default function Home() {
 
   const stability = calculateStability(plane.aspect_ratio, WCL)
 
+  const payloadCapacity = calculatePayloadCapacity(lift, totalMass)
+
   const massOfBattery = calculateMassOfBattery(plane.battery)
 
   const massOfPropeller = calculateMassOfPropeller(plane.propeller)
@@ -130,6 +133,7 @@ export default function Home() {
       <p>Maximum Velocity: {maximumVelocity}m/s</p>
       <p>WCL: {WCL}</p>
       <p>Stability: {stability}</p>
+      <p>Payload Capacity: {payloadCapacity.value}{payloadCapacity.units}</p>
       <p>Thrust with Maximum Velocity: {thrust}</p>
       <br />
       <h2>Battery</h2>

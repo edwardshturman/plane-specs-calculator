@@ -293,6 +293,25 @@ export function calculateStability(
   return aspect_ratio / wcl
 }
 
+export function calculatePayloadCapacity(
+  lift: number,
+  total_mass: Mass
+): Mass
+{
+  const maximumMass = lift / Constants.g
+
+  let massOfPlane
+  if (total_mass.units === 'g')
+    massOfPlane = total_mass.value / 1000
+  else
+    massOfPlane = total_mass.value
+
+  return {
+    value: maximumMass - massOfPlane,
+    units: 'kg'
+  }
+}
+
 export function testWingArea(
   wing_area: WingArea
 )
