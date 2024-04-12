@@ -44,6 +44,11 @@ export default function Home() {
     }
   }
 
+  const motorEfficiencyRating = calculateMotorEfficiencyRating(
+    plane.propeller,
+    plane.motor
+  )
+
   return (
     <>
       <h1>Plane Specs Calculator</h1>
@@ -69,6 +74,7 @@ export default function Home() {
       <h2>Motor</h2>
       <p>Mass: {plane.motor.mass.value}g</p>
       <p>kV: {plane.motor.kV} Kv</p>
+      <p>Efficiency Rating: {motorEfficiencyRating}</p>
       <br />
       <h2>Propeller</h2>
       <p>Diameter: {plane.propeller.diameter} in.</p>
