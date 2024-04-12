@@ -42,7 +42,7 @@ export default function Home() {
         cells: 4,
         voltage: 14.8
       },
-      capacity: 5000
+      capacity: 3500
     },
     motor: {
       mass: {
@@ -136,11 +136,11 @@ export default function Home() {
   )
   const maximumEndurance = calculateEndurance(
     plane.battery.capacity,
-    currentWithMaximumVelocity
+    currentWithMinimumVelocity
   )
   const minimumEndurance = calculateEndurance(
     plane.battery.capacity,
-    currentWithMinimumVelocity
+    currentWithMaximumVelocity
   )
 
   return (
