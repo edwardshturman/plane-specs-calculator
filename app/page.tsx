@@ -1,16 +1,19 @@
 import {
   Plane,
-  calculateAspectRatio,
-  calculateCoefficientOfLift,
-  calculateMassOfBattery,
-  calculateMassOfComponents,
+  calculateWCL,
+  calculateRPM,
+  calculateWeight,
+  calculateWingArea,
   calculatePlaneMass,
+  calculateTotalMass,
+  calculateAspectRatio,
+  calculateMassOfBattery,
   calculateMassOfPropeller,
   calculateMinimumVelocity,
-  calculateTotalMass,
-  calculateWCL,
-  calculateWeight,
-  calculateWingArea
+  calculateMaximumVelocity,
+  calculateMassOfComponents,
+  calculateCoefficientOfLift,
+  calculateMotorEfficiencyRating
 } from '@/functions/calculations'
 
 export default function Home() {

@@ -214,6 +214,14 @@ export function calculateCurrent(
   return (thrust * velocity) / voltage
 }
 
+export function calculateRPM(
+  efficiency_rating: number,
+  kV: number,
+  voltage: number
+) {
+  return efficiency_rating * kV * voltage
+}
+
 export function calculateMinimumVelocity(
   wing_area: WingArea,
   coefficient_of_lift: number,
