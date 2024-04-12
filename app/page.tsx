@@ -76,6 +76,14 @@ export default function Home() {
     weight
   )
 
+  const maximumVelocity = calculateMaximumVelocity(
+    RPM,
+    plane.propeller.diameter,
+    plane.propeller.pitch,
+    wingArea,
+    plane.coefficient_of_drag
+  )
+
   const WCL = calculateWCL(
     totalMass,
     wingArea
@@ -99,6 +107,7 @@ export default function Home() {
       <p>Coefficient of Lift: {plane.coefficient_of_lift}</p>
       <p>Coefficient of Drag: {plane.coefficient_of_drag}</p>
       <p>Minimum Velocity: {minimumVelocity}m/s</p>
+      <p>Maximum Velocity: {maximumVelocity}m/s</p>
       <p>WCL: {WCL}</p>
       <br />
       <h2>Battery</h2>

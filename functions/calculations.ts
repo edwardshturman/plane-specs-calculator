@@ -228,6 +228,56 @@ export function calculateMinimumVelocity(
   return Math.sqrt((weight) / (0.5 * Constants.rho * area * coefficient_of_lift))
 }
 
+export function calculateThrustWithoutVelocityTermOne(
+  RPM: number,
+  diameter: number,
+  pitch: number
+) {
+  return Constants.c1 * (Constants.rho * RPM * (diameter ** 3.5) / Math.sqrt(pitch))
+}
+
+export function calculateThrustWithoutVelocityTermTwo(
+  RPM: number,
+  pitch: number,
+) {
+  return Constants.c2 * RPM * pitch - 0
+}
+
+export function calculateDragWithoutVelocity(
+  wing_area: WingArea,
+  coefficient_of_drag: number
+) {
+  let area
+  if (wing_area.units === 'cm^2')
+    area = wing_area.value / 10000
+  else
+    area = wing_area.value
+  return 0.5 * Constants.rho * area * coefficient_of_drag
+}
+
+export function quadraticFormula(
+  a: number,
+  b: number,
+  c: number
+) {
+  return (-b + Math.sqrt(b ** 2 - 4 * a * c)) / (2 * a)
+}
+
+export function calculateMaximumVelocity(
+  RPM: number,
+  diameter: number,
+  pitch: number,
+  wing_area: WingArea,
+  coefficient_of_drag: number
+) {
+  const thrustTermOne = calculateThrustWithoutVelocityTermOne(RPM, diameter, pitch)
+  const thrustTermTwo = calculateThrustWithoutVelocityTermTwo(RPM, pitch)
+  const drag = calculateDragWithoutVelocity(wing_area, coefficient_of_drag)
+
+  const thrust = thrustTermOne * thrustTermTwo
+  return quadraticFormula(drag, thrustTermOne, -thrust)
+}
+
 export function testWingArea(
   wing_area: WingArea
 )
