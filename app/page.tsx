@@ -142,6 +142,7 @@ export default function Home() {
       <p>Payload Capacity: {payloadCapacity.value}{payloadCapacity.units}</p>
       <p>Thrust/Drag with Minimum Velocity: {minimumDrag}kg * m / s^2</p>
       <p>Thrust/Drag with Maximum Velocity: {maximumDrag}kg * m / s^2</p>
+      <p>RPM: {RPM}</p>
       <br />
       <h2>Battery</h2>
       <p>Cells: {plane.battery.battery.cells}</p>
