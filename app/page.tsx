@@ -3,8 +3,8 @@ import {
   calculateWCL,
   calculateRPM,
   calculateLift,
+  calculateDrag,
   calculateWeight,
-  calculateThrust,
   calculateWingArea,
   calculatePlaneMass,
   calculateTotalMass,
@@ -110,9 +110,15 @@ export default function Home() {
 
   const massOfPropeller = calculateMassOfPropeller(plane.propeller)
 
-  const thrust = calculateThrust(
-    RPM,
-    plane.propeller,
+  const minimumDrag = calculateDrag(
+    wingArea,
+    plane.coefficient_of_drag,
+    minimumVelocity
+  )
+
+  const maximumDrag = calculateDrag(
+    wingArea,
+    plane.coefficient_of_drag,
     maximumVelocity
   )
 
@@ -134,7 +140,8 @@ export default function Home() {
       <p>WCL: {WCL}</p>
       <p>Stability: {stability}</p>
       <p>Payload Capacity: {payloadCapacity.value}{payloadCapacity.units}</p>
-      <p>Thrust with Maximum Velocity: {thrust}</p>
+      <p>Thrust/Drag with Minimum Velocity: {minimumDrag}kg * m / s^2</p>
+      <p>Thrust/Drag with Maximum Velocity: {maximumDrag}kg * m / s^2</p>
       <br />
       <h2>Battery</h2>
       <p>Cells: {plane.battery.battery.cells}</p>
