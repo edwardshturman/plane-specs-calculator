@@ -4,6 +4,7 @@ import {
   calculateRPM,
   calculateLift,
   calculateWeight,
+  calculateThrust,
   calculateWingArea,
   calculatePlaneMass,
   calculateTotalMass,
@@ -103,6 +104,12 @@ export default function Home() {
 
   const massOfPropeller = calculateMassOfPropeller(plane.propeller)
 
+  const thrust = calculateThrust(
+    RPM,
+    plane.propeller,
+    maximumVelocity
+  )
+
   return (
     <>
       <h1>Plane Specs Calculator</h1>
@@ -119,6 +126,7 @@ export default function Home() {
       <p>Minimum Velocity: {minimumVelocity}m/s</p>
       <p>Maximum Velocity: {maximumVelocity}m/s</p>
       <p>WCL: {WCL}</p>
+      <p>Thrust with Maximum Velocity: {thrust}</p>
       <br />
       <h2>Battery</h2>
       <p>Cells: {plane.battery.battery.cells}</p>
