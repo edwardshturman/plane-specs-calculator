@@ -5,10 +5,12 @@ import {
   calculateLift,
   calculateDrag,
   calculateWeight,
+  calculateCurrent,
   calculateWingArea,
   calculatePlaneMass,
   calculateTotalMass,
   calculateStability,
+  calculateEndurance,
   calculateAspectRatio,
   calculateMassOfBattery,
   calculateMassOfPropeller,
@@ -122,6 +124,25 @@ export default function Home() {
     maximumVelocity
   )
 
+  const currentWithMaximumVelocity = calculateCurrent(
+    maximumDrag,
+    maximumVelocity,
+    plane.battery.battery.voltage
+  )
+  const currentWithMinimumVelocity = calculateCurrent(
+    minimumDrag,
+    minimumVelocity,
+    plane.battery.battery.voltage
+  )
+  const maximumEndurance = calculateEndurance(
+    plane.battery.capacity,
+    currentWithMaximumVelocity
+  )
+  const minimumEndurance = calculateEndurance(
+    plane.battery.capacity,
+    currentWithMinimumVelocity
+  )
+
   return (
     <>
       <h1>Plane Specs Calculator</h1>
@@ -140,6 +161,10 @@ export default function Home() {
       <p>WCL: {WCL}</p>
       <p>Stability: {stability}</p>
       <p>Payload Capacity: {payloadCapacity.value}{payloadCapacity.units}</p>
+      <p>Current with Minimum Velocity: {currentWithMinimumVelocity}A</p>
+      <p>Current with Maximum Velocity: {currentWithMaximumVelocity}A</p>
+      <p>Minimum Endurance: {minimumEndurance} millihours</p>
+      <p>Maximum Endurance: {maximumEndurance} millihours</p>
       <p>Thrust/Drag with Minimum Velocity: {minimumDrag}kg * m / s^2</p>
       <p>Thrust/Drag with Maximum Velocity: {maximumDrag}kg * m / s^2</p>
       <p>RPM: {RPM}</p>
