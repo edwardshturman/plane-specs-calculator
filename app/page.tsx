@@ -2,6 +2,7 @@ import {
   Plane,
   calculateWCL,
   calculateRPM,
+  calculateLift,
   calculateWeight,
   calculateWingArea,
   calculatePlaneMass,
@@ -87,6 +88,12 @@ export default function Home() {
     plane.coefficient_of_drag
   )
 
+  const lift = calculateLift(
+    maximumVelocity,
+    wingArea,
+    plane.coefficient_of_lift
+  )
+
   const WCL = calculateWCL(
     totalMass,
     wingArea
@@ -131,6 +138,7 @@ export default function Home() {
       <br />
       <p>Total Mass: {totalMass.value}{plane.mass.units}</p>
       <p>Weight: {weight}N</p>
+      <p>Lift: {lift}N</p>
     </>
   )
 }
