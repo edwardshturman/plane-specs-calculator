@@ -8,6 +8,7 @@ import {
   calculateWingArea,
   calculatePlaneMass,
   calculateTotalMass,
+  calculateStability,
   calculateAspectRatio,
   calculateMassOfBattery,
   calculateMassOfPropeller,
@@ -100,6 +101,8 @@ export default function Home() {
     wingArea
   )
 
+  const stability = calculateStability(plane.aspect_ratio, WCL)
+
   const massOfBattery = calculateMassOfBattery(plane.battery)
 
   const massOfPropeller = calculateMassOfPropeller(plane.propeller)
@@ -126,6 +129,7 @@ export default function Home() {
       <p>Minimum Velocity: {minimumVelocity}m/s</p>
       <p>Maximum Velocity: {maximumVelocity}m/s</p>
       <p>WCL: {WCL}</p>
+      <p>Stability: {stability}</p>
       <p>Thrust with Maximum Velocity: {thrust}</p>
       <br />
       <h2>Battery</h2>

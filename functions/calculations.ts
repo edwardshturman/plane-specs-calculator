@@ -286,6 +286,13 @@ export function calculateMaximumVelocity(
   return quadraticFormula(drag, thrustTermOne, -thrust)
 }
 
+export function calculateStability(
+  aspect_ratio: number,
+  wcl: number
+) {
+  return aspect_ratio / wcl
+}
+
 export function testWingArea(
   wing_area: WingArea
 )
